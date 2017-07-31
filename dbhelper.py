@@ -2,14 +2,15 @@
 import pymysql, dbconfig
 
 class DBHelper:
-
+    # connect to DB
     def connect(self, database="crimemap"):
         return pymysql.connect(host=dbconfig.host,
                                 port=dbconfig.port,
                                 user=dbconfig.db_user,
                                 password=dbconfig.db_password,
                                 db=database)
-
+    
+    # get all descriptions
     def get_all_inputs(self):
         connection = self.connect()
         try:
@@ -20,6 +21,7 @@ class DBHelper:
         finally:
             connection.close()
 
+    # add a crime
     def add_input(self, data):
         connection = self.connect()
         try:
@@ -30,6 +32,7 @@ class DBHelper:
         finally:
             connection.close()
 
+    # delete all crimes
     def clear_all(self):
         connection = self.connect()
         try:
