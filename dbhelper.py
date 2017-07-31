@@ -2,6 +2,14 @@
 import pymysql, dbconfig
 
 class DBHelper:
+    """DBHelper class used for interacting with the database
+
+    methods:
+    connect         connects to the database
+    get_all_inputs  returns all descriptions from database
+    add_input       inserts description into database
+    clear_all       deletes all from database
+    """
     # connect to DB
     def connect(self, database="crimemap"):
         return pymysql.connect(host=dbconfig.host,
