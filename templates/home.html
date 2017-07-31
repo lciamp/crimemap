@@ -35,11 +35,30 @@
     </script>
     <title>Crime Map</title>  
   </head>
-
   <body onload="initialize()">
-    <div id="map-canvas" style="width:80%; height: 500px;"></div>
-
     <h1>Crime Map</h1>
+    <div id="map-canvas" style="width:80%; height: 500px;"></div>
+    <div id="newcrimeform">
+      <h2>Submit New Crime</h2>
+      <form action="/submitcrime" method="POST">
+        <label for="category">Category</label>
+        <select name="catefory" id="category">
+          <option value="mugging">Mugging</option>
+          <option value="breakin">Break-in</option>
+        </select>
+        <label for="date">Date</label>
+        <input name="date" id="date" type="date">
+        <label for="latitude">Latitude</label>
+        <input name="latitude" id="latitude" type="text">
+        <label for="longitude">Longitude</label>
+        <input name="longitude" id="longitude" type="text">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" placeholder="A brief but detailed description of the crime"></textarea>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+
+
     <form action="/add" method="POST">
       <input type="text" name="userinput" />
       <input type="submit" value="Submit" />
