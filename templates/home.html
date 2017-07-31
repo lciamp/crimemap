@@ -6,22 +6,30 @@
     <script type="text/javascript" src="https://maps.google.com/maps/api/js"></script>
     <script type="text/javascript">
       function initialize() {
+        // global vars
+        var map;
+        var marker;
+        // location for center of map
         var nyc = {lat: 40.71955054111941, lng: -73.99858474731445};
-
-        var map = new google.maps.Map(document.getElementById('map-canvas'), {
+        // create the map
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
           zoom: 14,
           center: nyc
         });
-
+        // add listener to create marker on click
         google.maps.event.addListener(map, 'click', function(event){
           placeMarker(event.latLng);
-          console.log(event.latLng);
         });
+        // create marker function
         function placeMarker(location){
-          var marker = new google.maps.Marker({
-            position: location,
-            map: map
-          });
+          if(marker){
+            marker.setPosition(location);
+          } else {
+            marker = new google.maps.Marker({
+              position: location,
+              map: map
+            });
+          }
         }
       }
     </script>
