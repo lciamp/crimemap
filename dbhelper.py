@@ -9,6 +9,7 @@ class DBHelper:
                                 user=dbconfig.db_user,
                                 password=dbconfig.db_password,
                                 db=database)
+        
     def get_all_inputs(self):
         connection = self.connect()
         try:
