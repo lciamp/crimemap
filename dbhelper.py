@@ -9,7 +9,7 @@ class DBHelper:
                                 user=dbconfig.db_user,
                                 password=dbconfig.db_password,
                                 db=database)
-        
+
     def get_all_inputs(self):
         connection = self.connect()
         try:
@@ -23,7 +23,6 @@ class DBHelper:
     def add_input(self, data):
         connection = self.connect()
         try:
-            # the following introduces a deliberate security flaw. sql injection
             query = "INSERT INTO crimes (description) VALUES (%s);"
             with connection.cursor() as cursor:
                 cursor.execute(query, data)
