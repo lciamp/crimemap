@@ -9,6 +9,7 @@ class DBHelper:
     get_all_inputs  returns all descriptions from database
     add_input       inserts description into database
     clear_all       deletes all from database
+    add_crime       inserts whole crime into database
     """
     # connect to DB
     def connect(self, database="crimemap"):
@@ -29,7 +30,7 @@ class DBHelper:
         finally:
             connection.close()
 
-    # add a crime
+    # add a crime definition
     def add_input(self, data):
         connection = self.connect()
         try:
@@ -50,6 +51,29 @@ class DBHelper:
                 connection.commit()
         finally:
             connection.close()
+
+    # add a crime
+    def add_crime(self, category, date, latitude, longitude, description):
+        connection = self.connect()
+        try:
+            query = "INSERT INTO crimes (category, date, latitude, longitude, description) VALUES (%s, %s, %s, %s, %s);"
+            with connection.cursor() as cursor:
+                cursor.execute(query, (category, date, latitude, longitude, description))
+                connection.commit()
+        except Exception as e:
+            print(e)
+        finally:
+            connection.close()
+
+
+
+
+
+
+
+
+
+
 
 
 
