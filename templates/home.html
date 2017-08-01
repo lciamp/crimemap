@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/style.css') }}">
@@ -46,33 +46,31 @@
           }
         }
       }
-
     </script>
     <title>Crime Map</title>  
   </head>
-
   <body onload="initialize()">
     <h1>Crime Map</h1>
     <div id="map-canvas"></div>
     <div id="newcrimeform">
       <h2>Submit New Crime</h2>
       <form action="/submitcrime" method="POST">
-        <label for="category">Category</label>
+        <label for="category">Category:</label>
         <select name="category" id="category">
-          <option value="mugging">Mugging</option>
-          <option value="breakin">Break-in</option>
+          <option value="Mugging">Mugging</option>
+          <option value="Break-in">Break-in</option>
         </select>
-        <label for="date">Date</label>
+        <label for="date">Date:</label>
         <input name="date" id="date" type="date" />
-        <label for="latitude">Latitude</label>
+        <label for="latitude">Latitude:</label>
         <input name="latitude" id="latitude" type="text" />
-        <label for="longitude">Longitude</label>
+        <label for="longitude">Longitude:</label>
         <input name="longitude" id="longitude" type="text" />
-        <label for="description">Description</label>
+        <label for="description">Description:</label>
         <textarea name="description" id="description" placeholder="A brief but detailed description of the crime"></textarea>
         <input type="submit" value="Submit" />
       </form>
-      <a href="/clear">Clear</a>
+      <a href="/clear">Clear All</a>
     </div>
   </body>
 </html>
