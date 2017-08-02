@@ -1,20 +1,35 @@
-import json
+import dateparser, datetime, json, string
 from dbhelper import DBHelper
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 DB = DBHelper()
+categories = ['Mugging', 'Break-in', 'Robbery', 'Shooting']
+
+# HELPER FUNCTIONS
+# function for formating the date if input by user 
+def format_date(userdate):
+    date = dateparser.parse(userdate)
+    try:
+        return datetime.strftime(date, "%Y-%m-%d")
+    except TypeError:
+        return None
+
+# function for sanitizing description text
+def sanitize_string(userinput):
+    whitelist = string.letters + string.digits + " !?$.,:;'-()&"
+    return filter(lambda x: x in whitelist, userinput)
+
+
 
 # index
 @app.route("/")
-def home():
-    try:
-        crimes = DB.get_all_crimes()
-        crimes = json.dumps(crimes)
-    except Exception as e:
-        print e
-        crimes = None
-    return render_template("home.html", crimes=crimes)
+def home(error_message=None):
+    crimes = DB.get_all_crimes()
+    crimes = json.dumps(crimes)
+    return render_template("home.html", crimes=crimes, 
+                                        categories=categories,
+                                        error_message=error_message)
 
 # add to database
 @app.route("/add", methods=["POST"])
@@ -39,17 +54,27 @@ def clear():
 def submitcrime():
     try:
         category = request.form.get('category')
+        if category not in categories:
+            return home()
         date = request.form.get('date')
-        latitude = request.form.get('latitude')
-        longitude = request.form.get('longitude')
-        description = request.form.get('description')
+        if not date:
+            return home("Invalid date. Please use yyyy-mm-dd format.")
+        try:
+            latitude = float(request.form.get('latitude'))
+            longitude = float(request.form.get('longitude'))
+        except ValueError:
+            return home()
+        description = sanitize_string(request.form.get('description'))
         DB.add_crime(category, date, latitude, longitude, description)
     except Exception as e:
         print e
     return home()
 
-
-
+# run the app
 if __name__ == '__main__':
+
     app.run(port=5000, debug=True)
+
+
+
 
